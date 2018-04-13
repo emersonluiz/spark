@@ -1,12 +1,9 @@
 package br.com.emersonluiz.spark;
 
-import static spark.Spark.*;
+import static spark.Spark.port;
+import static spark.Spark.staticFiles;
 
-import java.util.UUID;
-
-import com.google.gson.Gson;
-
-import br.com.emersonluiz.spark.model.User;
+import br.com.emersonluiz.spark.rest.UserResource;
 
 public class Application {
 
@@ -15,25 +12,8 @@ public class Application {
 		port(8081);
 
 		staticFiles.location("/public");
-
-		get("/users", (req, res) -> {
-			res.type("application/json");
-			User user = new User();
-			user.setId(UUID.randomUUID().toString());
-			user.setName("Vinicius");
-			user.setEmail("test@test.com.br");
-			return new Gson().toJson(user);
-		});
-
-		get("/users/:name", (req, res) -> {
-			return "Name is: " + req.params(":name");
-		});
-
-		post("/users", (req, res) -> {
-			res.type("application/json");
-			User user = new Gson().fromJson(req.body(), User.class);
-			return new  Gson().toJson(user);
-		});
+		
+		new UserResource();
 
 	}
 
