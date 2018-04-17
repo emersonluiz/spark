@@ -12,7 +12,7 @@ public class Application {
 		port(8081);
 
 		staticFiles.location("/public");
-		
+
 		new UserResource();
 
 	}
